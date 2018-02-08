@@ -14,11 +14,11 @@ for i = 1 : length(vMax)
 end
 for i = 1 : size(y, 1)
   hold on
-  plot(s, y(i, :));
+  p=plot(s, y(i, :));
   hold off
 end
 title("Reaction Velocity vs Concentration of Autoregulatory Gene");
 xlabel("Substrate concentration [S] (mM)");
 ylabel("Reaction velocity (mM/s)");
-legend("vMax=2.0", "vMax=5.0", "vMax=10.0");
-    
+legend("vMax=2.0 mM/s", "vMax=5.0 mM/s", "vMax=10.0 mM/s");
+saveas(p, "Ex1Part3.png");    

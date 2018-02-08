@@ -14,13 +14,13 @@ for i = 1 : length(k)
 end
 for i = 1 : size(y, 1)
   hold on
-  plot(s, y(i, :));
+  p=plot(s, y(i, :));
   hold off
 end
 title("Reaction Velocity vs Concentration of Autoregulatory Gene");
 xlabel("Substrate concentration [S] (mM)");
 ylabel("Reaction velocity (mM/s)");
-legend("K=10.0", "K=20.0", "K=40.0");
-    
+legend("K=10.0 mM", "K=20.0 mM", "K=40.0 mM");
+saveas(p, "Ex1Part2.png");    
     
     

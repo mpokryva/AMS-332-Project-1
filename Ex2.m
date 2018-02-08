@@ -1,4 +1,5 @@
 close
+
 %%% Part 1 %%%
 totalTime = 20;
 deltaT = 0.01;
@@ -7,13 +8,19 @@ k = 0.33; % (mM)
 initProt = 0.5;
 initRna = 0.5;
 figureNum = 1;
+figure(figureNum);
 [time, prot, rna] = protRnaConcent(totalTime, deltaT, initProt, initRna, ...
     chiProt, chiRna, mu, omega, k);
-plotProtAndRna(time, prot, rna, figureNum, "Protein=" + initProt + ", " + "RNA=" + initRna);
+hold on
+p = plot(time, prot);
+p = plot(time, rna);
+hold off
+timeVsConcentrationSettings(figureNum, "Protein=" + initProt + ", " + "RNA=" + initRna);
 figureNum = figureNum + 1;
+saveas(p, "Ex2Part1.png");
+
 
 %%% Part 2 %%%
-
 
 init1 = 0.0;
 init2 = [0.2, 0.5];
@@ -21,21 +28,35 @@ init2 = [0.2, 0.5];
     chiProt, chiRna, mu, omega, k);
 
 % Plot prot = 0.
+gridIndex = 1;
+f = figure(figureNum);
 for i = 1 : length(init2)
    [time, prot, rna] = protRnaConcent(totalTime, deltaT, init1, init2(i), ...
        chiProt, chiRna, mu, omega, k);
-plotProtAndRna(time, prot, rna, figureNum, "Protein=" + init1 + ", RNA=" + init2(i));
-figureNum = figureNum + 1;
+   subplot(2, 2, gridIndex);
+   gridIndex = gridIndex + 1;
+   hold on
+   plot(time, prot);
+   plot(time, rna);
+   timeVsConcentrationSettings(figureNum, "Protein=" + init1 + ", RNA=" + init2(i));
+   hold off
 end
    
 % Plot rna = 0.
 for i = 1 : length(init2)
    [time, prot, rna] = protRnaConcent(totalTime, deltaT, init2(i), init1, ...
        chiProt, chiRna, mu, omega, k);
-    plotProtAndRna(time, prot, rna, figureNum, "Protein=" + init2(i) + ", RNA=" + init1);
-    figureNum = figureNum + 1;
+   subplot(2, 2, gridIndex);
+   gridIndex = gridIndex + 1;
+   hold on
+   plot(time, prot);
+   plot(time, rna);
+   timeVsConcentrationSettings(figureNum, "Protein=" + init1 + ", RNA=" + init2(i));
+   hold off
 end
-
+saveas(f, "Ex2Part2.png");
+figureNum = figureNum + 1;
+figure(figureNum);
 
 %%% Part 3 %%%
 
@@ -48,13 +69,14 @@ for i = 1 : length(init) % i = protein.
         [time, prots(i,:), rnas(j,:)] = protRnaConcent(totalTime, deltaT, init(i), init(j), ...
             chiProt, chiRna, mu, omega, k);
         figure(figureNum);
-        plot(prots(i,:), rnas(j,:));
+        p = plot(prots(i,:), rnas(j,:));
         hold off
     end
     xlabel("Protein Concentration (mM)");
     ylabel("RNA Concentration (mM)");
     title("Protein vs RNA Concentration");
 end
+saveas(p, "Ex2Part3.png");
 
 
 function y = dtProt(prot, rna, chiProt, omega)
@@ -82,14 +104,15 @@ initRna,chiProt, chiRna, mu, omega, k)
     end
 end
 
-function plotProtAndRna(time, prot, rna, figureNum, plotTitle)
-    figure(figureNum);
-    plot(time, prot, time, rna);
+function timeVsConcentrationSettings(figureNum, t)
     X_LABEL = "Time (s)";
     Y_LABEL = "Concentration (mM)";
+    labels = ["Protein", "RNA"];
+    figure(figureNum);
     xlabel(X_LABEL);
     ylabel(Y_LABEL);
     labels = ["Protein", "RNA"];
     legend(labels);
-    title(plotTitle);
+    title(t);
 end
+

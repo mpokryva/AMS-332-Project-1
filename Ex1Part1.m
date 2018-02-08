@@ -1,4 +1,4 @@
-close
+close all
 n = 100;
 s = (0 : 1 : n);
 h = [1, 2, 10];
@@ -14,11 +14,12 @@ for i = 1 : length(h)
 end
 for i = 1 : size(y, 1)
   hold on
-  plot(s, y(i, :));
+  p = plot(s, y(i, :));
   hold off
 end
 title("Reaction Velocity vs Concentration of Autoregulatory Gene");
 xlabel("Substrate concentration [S] (mM)");
 ylabel("Reaction velocity (mM/s)");
 legend("h=1", "h=2", "h=10");
+saveas(p, "Ex1Part1.png");
     
