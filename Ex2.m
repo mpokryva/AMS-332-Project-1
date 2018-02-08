@@ -51,7 +51,7 @@ for i = 1 : length(init2)
    hold on
    plot(time, prot);
    plot(time, rna);
-   timeVsConcentrationSettings(figureNum, "Protein=" + init1 + ", RNA=" + init2(i));
+   timeVsConcentrationSettings(figureNum, "Protein=" + init2(i) + ", RNA=" + init1);
    hold off
 end
 saveas(f, "Ex2Part2.png");
@@ -107,7 +107,6 @@ end
 function timeVsConcentrationSettings(figureNum, t)
     X_LABEL = "Time (s)";
     Y_LABEL = "Concentration (mM)";
-    labels = ["Protein", "RNA"];
     figure(figureNum);
     xlabel(X_LABEL);
     ylabel(Y_LABEL);
